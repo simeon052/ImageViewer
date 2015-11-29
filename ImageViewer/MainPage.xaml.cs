@@ -32,6 +32,8 @@ namespace ImageViewer
             {
                 timer = new DispatcherTimer();
             }
+
+
             timer.Interval = TimeSpan.FromSeconds(IntervalTime);
             timer.Tick += timer_Tick;
             timer.Start();
@@ -65,6 +67,30 @@ namespace ImageViewer
             picker.FileTypeFilter.Add(".png");
             picker.FileTypeFilter.Add(".jpg");
             files = new ImageFiles(await picker.PickMultipleFilesAsync());
+        }
+
+
+        private void AppBarButton_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine(sender.ToString());
+
+        }
+
+        private void MenuFlyoutItem_Click(object sender, RoutedEventArgs e)
+        {
+                      timer.Interval = TimeSpan.FromSeconds(1);
+        }
+
+        private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
+        {
+                       timer.Interval = TimeSpan.FromSeconds(3);
+
+        }
+
+        private void MenuFlyoutItem_Click_2(object sender, RoutedEventArgs e)
+        {
+                       timer.Interval = TimeSpan.FromSeconds(5);
+
         }
     }
 }

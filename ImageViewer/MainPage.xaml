@@ -9,10 +9,20 @@
     <Page.BottomAppBar>
         <CommandBar Background="#00a2e8">
             <CommandBar.SecondaryCommands>
-                <AppBarButton Click="LoadButton_Click" />
+                <AppBarButton Click="LoadButton_Click" Icon="SlideShow"/>
+                <AppBarButton Tapped="AppBarButton_Tapped" Icon="Setting">
+                    <AppBarButton.Flyout>
+                        <MenuFlyout>
+<MenuFlyoutItem Text="1 second" Click="MenuFlyoutItem_Click"/>
+<MenuFlyoutItem Text="3 seconds" Click="MenuFlyoutItem_Click_1"/>
+<MenuFlyoutItem Text="5 seconds" Click="MenuFlyoutItem_Click_2"/>                            
+                        </MenuFlyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
+
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
         <Image x:Name="image" />
