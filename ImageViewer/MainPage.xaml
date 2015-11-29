@@ -9,13 +9,13 @@
     <Page.BottomAppBar>
         <CommandBar Background="#00a2e8">
             <CommandBar.SecondaryCommands>
-                <AppBarButton Click="LoadButton_Click" Icon="SlideShow"/>
-                <AppBarButton Tapped="AppBarButton_Tapped" Icon="Setting">
+                <AppBarButton Click="LoadButton_Click" Icon="SlideShow" />
+                <AppBarButton Icon="Setting">
                     <AppBarButton.Flyout>
                         <MenuFlyout>
-<MenuFlyoutItem Text="1 second" Click="MenuFlyoutItem_Click"/>
-<MenuFlyoutItem Text="3 seconds" Click="MenuFlyoutItem_Click_1"/>
-<MenuFlyoutItem Text="5 seconds" Click="MenuFlyoutItem_Click_2"/>                            
+                            <MenuFlyoutItem Click="MenuFlyoutItem_Click_1" Text="1 second" />
+                            <MenuFlyoutItem Click="MenuFlyoutItem_Click_3" Text="3 seconds" />
+                            <MenuFlyoutItem Click="MenuFlyoutItem_Click_5" Text="5 seconds" />
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
