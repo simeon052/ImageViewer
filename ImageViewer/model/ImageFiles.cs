@@ -5,9 +5,20 @@ namespace ImageViewer.model
 {
     public class ImageFiles
     {
+        private static ImageFiles _instance = null;
+
+        private ImageFiles() { }
+
+        public static ImageFiles GetInstance()
+        {
+            if (_instance == null)
+                _instance = new ImageFiles();
+            return _instance;
+        }
+
         List<StorageFile> files = null;
         private int index = 0;
-        public ImageFiles(IReadOnlyList<StorageFile> l)
+        public void SetStorage(IReadOnlyList<StorageFile> l)
         {
             files = new List<StorageFile>();
             index = 0;

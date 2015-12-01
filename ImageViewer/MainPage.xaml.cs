@@ -67,7 +67,9 @@ namespace ImageViewer
             var picker = new FileOpenPicker();
             picker.FileTypeFilter.Add(".png");
             picker.FileTypeFilter.Add(".jpg");
-            files = new ImageFiles(await picker.PickMultipleFilesAsync());
+            var list = await picker.PickMultipleFilesAsync();
+            files = ImageFiles.GetInstance();
+            files.SetStorage(list);
         }
 
 
