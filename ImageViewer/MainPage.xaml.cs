@@ -16,7 +16,7 @@ namespace ImageViewer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        const int IntervalTime = 5;
+        const int InitialIntervalTime = 5;
 
         public MainPage()
         {
@@ -34,7 +34,7 @@ namespace ImageViewer
             }
 
 
-            timer.Interval = TimeSpan.FromSeconds(IntervalTime);
+            timer.Interval = TimeSpan.FromSeconds(InitialIntervalTime);
             timer.Tick += timer_Tick;
             timer.Start();
 
@@ -53,11 +53,12 @@ namespace ImageViewer
             if (files != null)
             {
                 var file = files.GetNext();
-                IRandomAccessStream stream = await file.OpenReadAsync();
-
-                var bitmap = new BitmapImage();
-                bitmap.SetSource(stream);
-                this.image.Source = bitmap;
+                using (IRandomAccessStream stream = await file.OpenReadAsync())
+                {
+                    var bitmap = new BitmapImage();
+                    bitmap.SetSource(stream);
+                    this.image.Source = bitmap;
+                }
             }
         }
 
@@ -72,18 +73,18 @@ namespace ImageViewer
 
         private void MenuFlyoutItem_Click_1(object sender, RoutedEventArgs e)
         {
-                      timer.Interval = TimeSpan.FromSeconds(1);
+            timer.Interval = TimeSpan.FromSeconds(1);
         }
 
         private void MenuFlyoutItem_Click_3(object sender, RoutedEventArgs e)
         {
-                       timer.Interval = TimeSpan.FromSeconds(3);
+            timer.Interval = TimeSpan.FromSeconds(3);
 
         }
 
         private void MenuFlyoutItem_Click_5(object sender, RoutedEventArgs e)
         {
-                       timer.Interval = TimeSpan.FromSeconds(5);
+            timer.Interval = TimeSpan.FromSeconds(5);
 
         }
     }
