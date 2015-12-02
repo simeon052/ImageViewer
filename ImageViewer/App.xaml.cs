@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using ImageViewer.model;
+using System;
 using System.IO;
-using System.Linq;
-using System.Runtime.InteropServices.WindowsRuntime;
+using System.Runtime.Serialization;
+using System.Xml;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.Foundation;
-using Windows.Foundation.Collections;
+using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Navigation;
 
 // 空のアプリケーション テンプレートについては、http://go.microsoft.com/fwlink/?LinkId=234227 を参照してください
@@ -65,6 +60,7 @@ namespace ImageViewer
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
                     //TODO: 以前中断したアプリケーションから状態を読み込みます
+
                 }
 
                 // フレームを現在のウィンドウに配置します
@@ -99,10 +95,22 @@ namespace ImageViewer
         /// </summary>
         /// <param name="sender">中断要求の送信元。</param>
         /// <param name="e">中断要求の詳細。</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: アプリケーションの状態を保存してバックグラウンドの動作があれば停止します
+            ImageFiles files = ImageFiles.GetInstance();
+            DataContractSerializer serializer = new DataContractSerializer(typeof(ImageFiles));
+            XmlWriterSettings settings = new XmlWriterSettings();
+            settings.Encoding = new System.Text.UTF8Encoding(false);
+            Windows.Storage.StorageFolder installedFolder = ApplicationData.Current.LocalFolder;
+
+            using (Stream st = await installedFolder.OpenStreamForWriteAsync("ImageListBackup.xml", Windows.Storage.CreationCollisionOption.ReplaceExisting))
+            using (XmlWriter xw = XmlWriter.Create(st, settings))
+            {
+                //シリアル化し、XMLファイルに保存する
+                serializer.WriteObject(xw, files);
+            }
             deferral.Complete();
         }
     }
