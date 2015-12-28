@@ -107,5 +107,10 @@ namespace ImageViewer
         {
 
         }
+
+        private void JumpAppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

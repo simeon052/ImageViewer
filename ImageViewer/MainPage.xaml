@@ -19,6 +19,17 @@
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
+                <AppBarButton Click="JumpAppBarButton_Click" Icon="Directions">
+                    <AppBarButton.Flyout>
+                        <Flyout>
+                            <StackPanel>
+                                <TextBlock Text="Jump to ..."/>
+                                <TextBox Name="PageNumber"  Text="0" HorizontalAlignment="Center"></TextBox>
+                                <Slider Name="PageSlider" Value="{Binding ElementName=PageNumber, Path=Text}"></Slider>                                
+                                </StackPanel>
+                        </Flyout>
+                    </AppBarButton.Flyout>
+                </AppBarButton>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
