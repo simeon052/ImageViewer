@@ -21,12 +21,13 @@
                 </AppBarButton>
                 <AppBarButton Click="JumpAppBarButton_Click" Icon="Directions">
                     <AppBarButton.Flyout>
-                        <Flyout>
-                            <StackPanel>
+                        <Flyout x:Name="PageJumpFlyout" Closed="Flyout_Closed">
+                            <StackPanel Width="210">
                                 <TextBlock Text="Jump to ..."/>
-                                <TextBox Name="PageNumber"  Text="0" HorizontalAlignment="Center"></TextBox>
-                                <Slider Name="PageSlider" Value="{Binding ElementName=PageNumber, Path=Text}"></Slider>                                
-                                </StackPanel>
+                                <TextBox Name="PageNumber"  Text="1" HorizontalAlignment="Center" TextChanged="PageNumber_TextChanged"></TextBox>
+                                <Slider Name="PageSlider" Value="{Binding ElementName=PageNumber, Path=Text, Mode=TwoWay}" ManipulationCompleted="PageSlider_ManipulationCompleted" ValueChanged="PageSlider_ValueChanged" PointerReleased="PageSlider_PointerReleased"></Slider>
+                                <Button x:Name="JumpPageFlyoutOKButton" Content="OK" HorizontalAlignment="Stretch" Margin="70,0" RenderTransformOrigin="3.593,0.642" Click="JumpPageFlyoutOKButton_Click"/>
+                            </StackPanel>
                         </Flyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
