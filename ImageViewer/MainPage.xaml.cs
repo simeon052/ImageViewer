@@ -1,5 +1,6 @@
 ﻿using ImageViewer.model;
 using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
@@ -22,6 +23,8 @@ namespace ImageViewer
         public MainPage()
         {
             this.InitializeComponent();
+            this.PageSlider.Maximum = 1;
+            this.PageSlider.Minimum = 1;
         }
 
         DispatcherTimer timer = null;
@@ -63,6 +66,8 @@ namespace ImageViewer
             var list = await picker.PickMultipleFilesAsync();
             files = ImageFiles.GetInstance();
             files.SetStorage(list);
+            this.PageSlider.Maximum = files.Count();
+            this.PageSlider.Minimum = 1;
         }
 
 
@@ -86,13 +91,27 @@ namespace ImageViewer
         private async void image_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             await this.show_next_image();
-         }
+        }
 
         private async Task show_next_image()
         {
             if (files != null)
             {
                 var file = files.GetNext();
+                using (IRandomAccessStream stream = await file.OpenReadAsync())
+                {
+                    var bitmap = new BitmapImage();
+                    bitmap.SetSource(stream);
+                    this.image.Source = bitmap;
+                }
+            }
+
+        }
+         private async Task show_specified_image(int page)
+        {
+            if (files != null)
+            {
+                var file = files.GetSpecified(page);
                 using (IRandomAccessStream stream = await file.OpenReadAsync())
                 {
                     var bitmap = new BitmapImage();
@@ -111,6 +130,43 @@ namespace ImageViewer
         private void JumpAppBarButton_Click(object sender, RoutedEventArgs e)
         {
 
+        }
+
+        private void PageNumber_TextChanged(object sender, TextChangedEventArgs e)
+        {
+        }
+
+        private void PageSlider_ManipulationCompleted(object sender, Windows.UI.Xaml.Input.ManipulationCompletedRoutedEventArgs e)
+        {
+            int currenPage = 0;
+            int.TryParse(PageNumber.Text, out currenPage);
+        }
+
+        private void PageSlider_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
+        {
+            int currentPage = 0;
+            int.TryParse(PageNumber.Text, out currentPage);
+        }
+
+        private void PageSlider_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
+        {
+            Debug.WriteLine("pointer released");
+        }
+
+        private async void Flyout_Closed(object sender, object e)
+        {
+            int currentPage = 0;
+            int.TryParse(PageNumber.Text, out currentPage);
+            Debug.WriteLine("Page jump flyout is closed. " + currentPage.ToString());
+            await show_specified_image(currentPage);
+
+        }
+
+        private void JumpPageFlyoutOKButton_Click(object sender, RoutedEventArgs e)
+        {
+            Debug.WriteLine("OK button is pressed");
+
+            this.PageJumpFlyout.Hide();
         }
     }
 }

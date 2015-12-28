@@ -47,6 +47,22 @@ namespace ImageViewer.model
             }
             return files[index++];
         }
+         public StorageFile GetPrevious()
+        {
+            if (index-1 < 0)
+            {
+                index = 0;
+            }
+            return files[index];
+        }
 
+        public StorageFile GetSpecified(int page)
+        {
+            if ((0 < page) && (page < files.Count))
+            {
+                index = page;
+            }
+            return files[index];
+        }
     }
 }
