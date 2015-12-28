@@ -25,6 +25,6 @@
 
 
     <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Image x:Name="image" />
+        <Image x:Name="image" Tapped="image_Tapped" DoubleTapped="image_DoubleTapped" />
     </Grid>
 </Page>

@@ -1,5 +1,6 @@
 ﻿using ImageViewer.model;
 using System;
+using System.Threading.Tasks;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
@@ -50,16 +51,8 @@ namespace ImageViewer
 
         async void timer_Tick(object sender, object e)
         {
-            if (files != null)
-            {
-                var file = files.GetNext();
-                using (IRandomAccessStream stream = await file.OpenReadAsync())
-                {
-                    var bitmap = new BitmapImage();
-                    bitmap.SetSource(stream);
-                    this.image.Source = bitmap;
-                }
-            }
+            await this.show_next_image();
+
         }
 
         private async void LoadButton_Click(object sender, RoutedEventArgs e)
@@ -87,6 +80,31 @@ namespace ImageViewer
         private void MenuFlyoutItem_Click_5(object sender, RoutedEventArgs e)
         {
             timer.Interval = TimeSpan.FromSeconds(5);
+
+        }
+
+        private async void image_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        {
+            await this.show_next_image();
+         }
+
+        private async Task show_next_image()
+        {
+            if (files != null)
+            {
+                var file = files.GetNext();
+                using (IRandomAccessStream stream = await file.OpenReadAsync())
+                {
+                    var bitmap = new BitmapImage();
+                    bitmap.SetSource(stream);
+                    this.image.Source = bitmap;
+                }
+            }
+
+        }
+
+        private void image_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
+        {
 
         }
     }
