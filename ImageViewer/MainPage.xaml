@@ -37,6 +37,6 @@
 
 
     <Grid Background="Transparent" ManipulationStarted="Grid_ManipulationStarted">
-        <Image x:Name="image" Tapped="image_Tapped" DoubleTapped="image_DoubleTapped" ManipulationStarted="image_ManipulationStarted" ManipulationDelta="image_ManipulationDelta" />
+        <Image x:Name="image" Tapped="image_Tapped" DoubleTapped="image_DoubleTapped" ManipulationStarted="image_ManipulationStarted" ManipulationDelta="image_ManipulationDelta" ManipulationMode="All" Holding="image_Holding" />
     </Grid>
 </Page>
