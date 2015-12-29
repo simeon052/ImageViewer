@@ -19,13 +19,13 @@
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
-                <AppBarButton Click="JumpAppBarButton_Click" Icon="Directions">
+                <AppBarButton Icon="Directions">
                     <AppBarButton.Flyout>
                         <Flyout x:Name="PageJumpFlyout" Closed="Flyout_Closed">
                             <StackPanel Width="210">
                                 <TextBlock Text="Jump to ..."/>
-                                <TextBox Name="PageNumber"  Text="1" HorizontalAlignment="Center" TextChanged="PageNumber_TextChanged"></TextBox>
-                                <Slider Name="PageSlider" Value="{Binding ElementName=PageNumber, Path=Text, Mode=TwoWay}" ValueChanged="PageSlider_ValueChanged" PointerReleased="PageSlider_PointerReleased"></Slider>
+                                <TextBox Name="PageNumber"  Text="1" HorizontalAlignment="Center" ></TextBox>
+                                <Slider Name="PageSlider" Value="{Binding ElementName=PageNumber, Path=Text, Mode=TwoWay}"></Slider>
                                 <Button x:Name="JumpPageFlyoutOKButton" Content="OK" HorizontalAlignment="Stretch" Margin="70,0" RenderTransformOrigin="3.593,0.642" Click="JumpPageFlyoutOKButton_Click"/>
                             </StackPanel>
                         </Flyout>
@@ -36,7 +36,7 @@
     </Page.BottomAppBar>
 
 
-    <Grid Background="Transparent" ManipulationMode="TranslateX" ManipulationStarted="Grid_ManipulationStarted" ManipulationDelta="Grid_ManipulationDelta" ManipulationCompleted="Grid_ManipulationCompleted">
-        <Image x:Name="image" Tapped="image_Tapped" Holding="image_Holding" />
+    <Grid Background="Transparent" ManipulationMode="TranslateX" ManipulationStarted="Grid_ManipulationStarted" ManipulationCompleted="Grid_ManipulationCompleted">
+        <Image x:Name="image"/>
     </Grid>
 </Page>
