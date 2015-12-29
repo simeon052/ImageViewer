@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Windows.Storage;
 
 namespace ImageViewer.model
@@ -34,10 +35,7 @@ namespace ImageViewer.model
             files.Add(f);
         }
 
-        public int Count()
-        {
-            return files.Count;
-        }
+        public int count { get { return files.Count; } }
 
         public StorageFile GetNext()
         {
@@ -45,15 +43,17 @@ namespace ImageViewer.model
             {
                 index = 0;
             }
+            Debug.WriteLine(" Next : " + index.ToString());
             return files[index++];
         }
-         public StorageFile GetPrevious()
+        public StorageFile GetPrevious()
         {
-            if (index-1 < 0)
+            if (index - 1 < 0)
             {
                 index = 0;
             }
-            return files[index];
+            Debug.WriteLine(" Previous : " + (index - 1).ToString());
+            return files[--index];
         }
 
         public StorageFile GetSpecified(int page)
@@ -62,6 +62,7 @@ namespace ImageViewer.model
             {
                 index = page;
             }
+            Debug.WriteLine(" Specified " + index.ToString());
             return files[index];
         }
     }

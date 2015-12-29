@@ -2,6 +2,7 @@
 using System;
 using System.Diagnostics;
 using System.Threading.Tasks;
+using Windows.Foundation;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.UI.Xaml;
@@ -66,7 +67,7 @@ namespace ImageViewer
             var list = await picker.PickMultipleFilesAsync();
             files = ImageFiles.GetInstance();
             files.SetStorage(list);
-            this.PageSlider.Maximum = files.Count();
+            this.PageSlider.Maximum = files.count;
             this.PageSlider.Minimum = 1;
         }
 
@@ -107,7 +108,23 @@ namespace ImageViewer
             }
 
         }
-         private async Task show_specified_image(int page)
+
+        private async Task show_previous_image()
+        {
+            if (files != null)
+            {
+                var file = files.GetPrevious();
+                using (IRandomAccessStream stream = await file.OpenReadAsync())
+                {
+                    var bitmap = new BitmapImage();
+                    bitmap.SetSource(stream);
+                    this.image.Source = bitmap;
+                }
+            }
+
+        }
+
+        private async Task show_specified_image(int page)
         {
             if (files != null)
             {
@@ -122,9 +139,9 @@ namespace ImageViewer
 
         }
 
-        private void image_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
+        private async void image_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
         {
-
+            await this.show_previous_image();
         }
 
         private void JumpAppBarButton_Click(object sender, RoutedEventArgs e)
@@ -167,6 +184,45 @@ namespace ImageViewer
             Debug.WriteLine("OK button is pressed");
 
             this.PageJumpFlyout.Hide();
+        }
+
+        private void MenuFlyoutItem_Click_60(object sender, RoutedEventArgs e)
+        {
+            timer.Interval = TimeSpan.FromSeconds(60);
+        }
+
+
+
+        private Point initialpoint;
+
+        private void image_ManipulationStarted(object sender, Windows.UI.Xaml.Input.ManipulationStartedRoutedEventArgs e)
+        {
+            initialpoint = e.Position;
+        }
+
+        private void image_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
+        {
+            Point currentpoint = e.Position;
+            if (currentpoint.X - initialpoint.X >= 100)
+            {
+                Debug.WriteLine("Swipe Right");
+            }
+            if (initialpoint.X - currentpoint.X >= 100)
+            {
+                Debug.WriteLine("Swipe Left");
+            }
+            e.Complete();
+
+        }
+
+        private void Page_ManipulationStarted(object sender, Windows.UI.Xaml.Input.ManipulationStartedRoutedEventArgs e)
+        {
+              initialpoint = e.Position;
+        }
+
+        private void Grid_ManipulationStarted(object sender, Windows.UI.Xaml.Input.ManipulationStartedRoutedEventArgs e)
+        {
+            initialpoint = e.Position;
         }
     }
 }
