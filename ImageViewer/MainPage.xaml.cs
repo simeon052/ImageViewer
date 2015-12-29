@@ -19,15 +19,13 @@ namespace ImageViewer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        const int InitialIntervalTime = 5;
+        const int InitialIntervalTime = 60;
 
         public MainPage()
         {
             this.InitializeComponent();
             this.PageSlider.Maximum = 1;
             this.PageSlider.Minimum = 1;
-
-            this.image.ManipulationMode = Windows.UI.Xaml.Input.ManipulationModes.All;
         }
 
         DispatcherTimer timer = null;
@@ -91,9 +89,9 @@ namespace ImageViewer
 
         }
 
-        private async void image_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private void image_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            await this.show_next_image();
+            //            await this.show_next_image();
         }
 
         private async Task show_next_image()
@@ -155,16 +153,25 @@ namespace ImageViewer
         {
         }
 
-        private void PageSlider_ManipulationCompleted(object sender, Windows.UI.Xaml.Input.ManipulationCompletedRoutedEventArgs e)
+        private async void Grid_ManipulationCompleted(object sender, Windows.UI.Xaml.Input.ManipulationCompletedRoutedEventArgs e)
         {
-            int currenPage = 0;
-            int.TryParse(PageNumber.Text, out currenPage);
+            Debug.WriteLine("Manipulation Completed : " + e.Position.X.ToString());
+            Point currentpoint = e.Position;
+            if (currentpoint.X - initialpoint.X >= 10)
+            {
+                Debug.WriteLine("Swipe Right");
+                await this.show_next_image();
+            }
+            if (initialpoint.X - currentpoint.X >= 10)
+            {
+                Debug.WriteLine("Swipe Left");
+                await this.show_previous_image();
+            }
+            //            e.Complete();
         }
 
         private void PageSlider_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {
-            int currentPage = 0;
-            int.TryParse(PageNumber.Text, out currentPage);
         }
 
         private void PageSlider_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
@@ -184,7 +191,6 @@ namespace ImageViewer
         private void JumpPageFlyoutOKButton_Click(object sender, RoutedEventArgs e)
         {
             Debug.WriteLine("OK button is pressed");
-
             this.PageJumpFlyout.Hide();
         }
 
@@ -194,42 +200,34 @@ namespace ImageViewer
         }
 
 
-
         private Point initialpoint;
 
-        private void image_ManipulationStarted(object sender, Windows.UI.Xaml.Input.ManipulationStartedRoutedEventArgs e)
+        private void Grid_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
         {
-            initialpoint = e.Position;
-        }
-
-        private void image_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
-        {
+            Debug.WriteLine("Manipulation Delta : " + e.Position.X.ToString());
             Point currentpoint = e.Position;
-            if (currentpoint.X - initialpoint.X >= 100)
+            if (currentpoint.X - initialpoint.X >= 10)
             {
                 Debug.WriteLine("Swipe Right");
+                //await                this.show_next_image();
             }
-            if (initialpoint.X - currentpoint.X >= 100)
+            if (initialpoint.X - currentpoint.X >= 10)
             {
                 Debug.WriteLine("Swipe Left");
+                //                await this.show_previous_image();
             }
             e.Complete();
-
         }
 
-        private void Page_ManipulationStarted(object sender, Windows.UI.Xaml.Input.ManipulationStartedRoutedEventArgs e)
+        private void image_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
         {
-              initialpoint = e.Position;
+            // await this.show_previous_image();
         }
 
         private void Grid_ManipulationStarted(object sender, Windows.UI.Xaml.Input.ManipulationStartedRoutedEventArgs e)
         {
+            Debug.WriteLine("Manipulation Started : " + e.Position.X.ToString());
             initialpoint = e.Position;
-        }
-
-        private async void image_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
-        {
-            await this.show_previous_image();
         }
     }
 }
