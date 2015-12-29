@@ -26,6 +26,8 @@ namespace ImageViewer
             this.InitializeComponent();
             this.PageSlider.Maximum = 1;
             this.PageSlider.Minimum = 1;
+
+            this.image.ManipulationMode = Windows.UI.Xaml.Input.ManipulationModes.All;
         }
 
         DispatcherTimer timer = null;
@@ -139,9 +141,9 @@ namespace ImageViewer
 
         }
 
-        private async void image_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
+        private void image_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
         {
-            await this.show_previous_image();
+            //      
         }
 
         private void JumpAppBarButton_Click(object sender, RoutedEventArgs e)
@@ -223,6 +225,11 @@ namespace ImageViewer
         private void Grid_ManipulationStarted(object sender, Windows.UI.Xaml.Input.ManipulationStartedRoutedEventArgs e)
         {
             initialpoint = e.Position;
+        }
+
+        private async void image_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
+        {
+            await this.show_previous_image();
         }
     }
 }

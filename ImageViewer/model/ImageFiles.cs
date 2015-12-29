@@ -48,12 +48,15 @@ namespace ImageViewer.model
         }
         public StorageFile GetPrevious()
         {
-            if (index - 1 < 0)
-            {
-                index = 0;
-            }
             Debug.WriteLine(" Previous : " + (index - 1).ToString());
-            return files[--index];
+            if (index == 0)
+            {
+            return files[0];
+            }
+            else
+            {
+                return files[--index];
+            }
         }
 
         public StorageFile GetSpecified(int page)
