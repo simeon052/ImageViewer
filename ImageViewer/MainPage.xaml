@@ -36,7 +36,7 @@
     </Page.BottomAppBar>
 
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" ManipulationStarted="Grid_ManipulationStarted">
+    <Grid Background="Transparent" ManipulationStarted="Grid_ManipulationStarted">
         <Image x:Name="image" Tapped="image_Tapped" DoubleTapped="image_DoubleTapped" ManipulationStarted="image_ManipulationStarted" ManipulationDelta="image_ManipulationDelta" />
     </Grid>
 </Page>
