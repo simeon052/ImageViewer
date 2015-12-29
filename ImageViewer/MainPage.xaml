@@ -4,8 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:ImageViewer"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      mc:Ignorable="d">
-
+      mc:Ignorable="d" ManipulationStarted="Page_ManipulationStarted">
     <Page.BottomAppBar>
         <CommandBar Background="#00a2e8">
             <CommandBar.SecondaryCommands>
@@ -16,6 +15,7 @@
                             <MenuFlyoutItem Click="MenuFlyoutItem_Click_1" Text="1 second" />
                             <MenuFlyoutItem Click="MenuFlyoutItem_Click_3" Text="3 seconds" />
                             <MenuFlyoutItem Click="MenuFlyoutItem_Click_5" Text="5 seconds" />
+                            <MenuFlyoutItem Click="MenuFlyoutItem_Click_60" Text="60 seconds" />
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
@@ -36,7 +36,7 @@
     </Page.BottomAppBar>
 
 
-    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}">
-        <Image x:Name="image" Tapped="image_Tapped" DoubleTapped="image_DoubleTapped" />
+    <Grid Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" ManipulationStarted="Grid_ManipulationStarted">
+        <Image x:Name="image" Tapped="image_Tapped" DoubleTapped="image_DoubleTapped" ManipulationStarted="image_ManipulationStarted" ManipulationDelta="image_ManipulationDelta" />
     </Grid>
 </Page>
