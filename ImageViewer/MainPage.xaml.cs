@@ -15,11 +15,10 @@ using Windows.UI.Xaml.Navigation;
 namespace ImageViewer
 {
     /// <summary>
-    /// それ自体で使用できる空白ページまたはフレーム内に移動できる空白ページ。
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        const int InitialIntervalTime = 60;
+        const int InitialIntervalTime = 5;
 
         public MainPage()
         {
@@ -37,7 +36,6 @@ namespace ImageViewer
             {
                 timer = new DispatcherTimer();
             }
-
 
             timer.Interval = TimeSpan.FromSeconds(InitialIntervalTime);
             timer.Tick += timer_Tick;
@@ -80,7 +78,6 @@ namespace ImageViewer
         private void MenuFlyoutItem_Click_3(object sender, RoutedEventArgs e)
         {
             timer.Interval = TimeSpan.FromSeconds(3);
-
         }
 
         private void MenuFlyoutItem_Click_5(object sender, RoutedEventArgs e)
@@ -89,10 +86,6 @@ namespace ImageViewer
 
         }
 
-        private void image_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            //            await this.show_next_image();
-        }
 
         private async Task show_next_image()
         {
@@ -136,47 +129,6 @@ namespace ImageViewer
                     this.image.Source = bitmap;
                 }
             }
-
-        }
-
-        private void image_DoubleTapped(object sender, Windows.UI.Xaml.Input.DoubleTappedRoutedEventArgs e)
-        {
-            //      
-        }
-
-        private void JumpAppBarButton_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
-
-        private void PageNumber_TextChanged(object sender, TextChangedEventArgs e)
-        {
-        }
-
-        private async void Grid_ManipulationCompleted(object sender, Windows.UI.Xaml.Input.ManipulationCompletedRoutedEventArgs e)
-        {
-            Debug.WriteLine("Manipulation Completed : " + e.Position.X.ToString());
-            Point currentpoint = e.Position;
-            if (currentpoint.X - initialpoint.X >= 10)
-            {
-                Debug.WriteLine("Swipe Right");
-                await this.show_next_image();
-            }
-            if (initialpoint.X - currentpoint.X >= 10)
-            {
-                Debug.WriteLine("Swipe Left");
-                await this.show_previous_image();
-            }
-            //            e.Complete();
-        }
-
-        private void PageSlider_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
-        {
-        }
-
-        private void PageSlider_PointerReleased(object sender, Windows.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            Debug.WriteLine("pointer released");
         }
 
         private async void Flyout_Closed(object sender, object e)
@@ -199,35 +151,32 @@ namespace ImageViewer
             timer.Interval = TimeSpan.FromSeconds(60);
         }
 
-
         private Point initialpoint;
-
-        private void Grid_ManipulationDelta(object sender, Windows.UI.Xaml.Input.ManipulationDeltaRoutedEventArgs e)
-        {
-            Debug.WriteLine("Manipulation Delta : " + e.Position.X.ToString());
-            Point currentpoint = e.Position;
-            if (currentpoint.X - initialpoint.X >= 10)
-            {
-                Debug.WriteLine("Swipe Right");
-                //await                this.show_next_image();
-            }
-            if (initialpoint.X - currentpoint.X >= 10)
-            {
-                Debug.WriteLine("Swipe Left");
-                //                await this.show_previous_image();
-            }
-            e.Complete();
-        }
-
-        private void image_Holding(object sender, Windows.UI.Xaml.Input.HoldingRoutedEventArgs e)
-        {
-            // await this.show_previous_image();
-        }
 
         private void Grid_ManipulationStarted(object sender, Windows.UI.Xaml.Input.ManipulationStartedRoutedEventArgs e)
         {
             Debug.WriteLine("Manipulation Started : " + e.Position.X.ToString());
             initialpoint = e.Position;
         }
+
+        private async void Grid_ManipulationCompleted(object sender, Windows.UI.Xaml.Input.ManipulationCompletedRoutedEventArgs e)
+        {
+            Debug.WriteLine("Manipulation Completed : " + e.Position.X.ToString());
+            Point currentpoint = e.Position;
+            if (currentpoint.X - initialpoint.X >= 10)
+            {
+                Debug.WriteLine("Swipe Right");
+                await this.show_next_image();
+            }
+            if (initialpoint.X - currentpoint.X >= 10)
+            {
+                Debug.WriteLine("Swipe Left");
+                await this.show_previous_image();
+            }
+            // Restert timer after user operation
+            timer.Stop();
+            timer.Start();
+        }
+
     }
 }
