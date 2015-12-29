@@ -4,7 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:ImageViewer"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      mc:Ignorable="d" ManipulationStarted="Page_ManipulationStarted">
+      mc:Ignorable="d">
     <Page.BottomAppBar>
         <CommandBar Background="#00a2e8">
             <CommandBar.SecondaryCommands>
@@ -25,7 +25,7 @@
                             <StackPanel Width="210">
                                 <TextBlock Text="Jump to ..."/>
                                 <TextBox Name="PageNumber"  Text="1" HorizontalAlignment="Center" TextChanged="PageNumber_TextChanged"></TextBox>
-                                <Slider Name="PageSlider" Value="{Binding ElementName=PageNumber, Path=Text, Mode=TwoWay}" ManipulationCompleted="PageSlider_ManipulationCompleted" ValueChanged="PageSlider_ValueChanged" PointerReleased="PageSlider_PointerReleased"></Slider>
+                                <Slider Name="PageSlider" Value="{Binding ElementName=PageNumber, Path=Text, Mode=TwoWay}" ValueChanged="PageSlider_ValueChanged" PointerReleased="PageSlider_PointerReleased"></Slider>
                                 <Button x:Name="JumpPageFlyoutOKButton" Content="OK" HorizontalAlignment="Stretch" Margin="70,0" RenderTransformOrigin="3.593,0.642" Click="JumpPageFlyoutOKButton_Click"/>
                             </StackPanel>
                         </Flyout>
@@ -36,7 +36,7 @@
     </Page.BottomAppBar>
 
 
-    <Grid Background="Transparent" ManipulationStarted="Grid_ManipulationStarted">
-        <Image x:Name="image" Tapped="image_Tapped" DoubleTapped="image_DoubleTapped" ManipulationStarted="image_ManipulationStarted" ManipulationDelta="image_ManipulationDelta" ManipulationMode="All" Holding="image_Holding" />
+    <Grid Background="Transparent" ManipulationMode="TranslateX" ManipulationStarted="Grid_ManipulationStarted" ManipulationDelta="Grid_ManipulationDelta" ManipulationCompleted="Grid_ManipulationCompleted">
+        <Image x:Name="image" Tapped="image_Tapped" Holding="image_Holding" />
     </Grid>
 </Page>

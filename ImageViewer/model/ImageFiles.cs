@@ -49,9 +49,9 @@ namespace ImageViewer.model
         public StorageFile GetPrevious()
         {
             Debug.WriteLine(" Previous : " + (index - 1).ToString());
-            if (index == 0)
+            if (index <= 0)
             {
-            return files[0];
+                return files[0];
             }
             else
             {
