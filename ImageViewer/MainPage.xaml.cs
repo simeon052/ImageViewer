@@ -67,6 +67,7 @@ namespace ImageViewer
             files.SetStorage(list);
             this.PageSlider.Maximum = files.count;
             this.PageSlider.Minimum = 1;
+            await this.show_specified_image(0);
         }
 
 
