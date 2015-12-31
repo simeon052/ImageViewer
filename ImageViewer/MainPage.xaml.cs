@@ -25,6 +25,9 @@ namespace ImageViewer
             this.InitializeComponent();
             this.PageSlider.Maximum = 1;
             this.PageSlider.Minimum = 1;
+            var files = ImageFiles.GetInstance();
+//var task = files.RestoreAsync<ImageFiles>();
+//            task.Wait();
         }
 
         DispatcherTimer timer = null;

@@ -95,23 +95,23 @@ namespace ImageViewer
         /// </summary>
         /// <param name="sender">中断要求の送信元。</param>
         /// <param name="e">中断要求の詳細。</param>
-        private async void OnSuspending(object sender, SuspendingEventArgs e)
+        private void OnSuspending(object sender, SuspendingEventArgs e)
         {
-            var deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: アプリケーションの状態を保存してバックグラウンドの動作があれば停止します
-            ImageFiles files = ImageFiles.GetInstance();
-            DataContractSerializer serializer = new DataContractSerializer(typeof(ImageFiles));
-            XmlWriterSettings settings = new XmlWriterSettings();
-            settings.Encoding = new System.Text.UTF8Encoding(false);
-            Windows.Storage.StorageFolder installedFolder = ApplicationData.Current.LocalFolder;
+            //var deferral = e.SuspendingOperation.GetDeferral();
+            ////TODO: アプリケーションの状態を保存してバックグラウンドの動作があれば停止します
+            //ImageFiles files = ImageFiles.GetInstance();
+            //DataContractSerializer serializer = new DataContractSerializer(typeof(ImageFiles));
+            //XmlWriterSettings settings = new XmlWriterSettings();
+            //settings.Encoding = new System.Text.UTF8Encoding(false);
+            //Windows.Storage.StorageFolder installedFolder = ApplicationData.Current.LocalFolder;
 
-            using (Stream st = await installedFolder.OpenStreamForWriteAsync("ImageListBackup.xml", Windows.Storage.CreationCollisionOption.ReplaceExisting))
-            using (XmlWriter xw = XmlWriter.Create(st, settings))
-            {
-                //シリアル化し、XMLファイルに保存する
-                serializer.WriteObject(xw, files);
-            }
-            deferral.Complete();
+            //using (Stream st = await installedFolder.OpenStreamForWriteAsync("ImageListBackup.xml", Windows.Storage.CreationCollisionOption.ReplaceExisting))
+            //using (XmlWriter xw = XmlWriter.Create(st, settings))
+            //{
+            //    //シリアル化し、XMLファイルに保存する
+            //    serializer.WriteObject(xw, files);
+            //}
+            //deferral.Complete();
         }
     }
 }
