@@ -125,6 +125,7 @@
   <ItemGroup>
     <Content Include="Assets\SSSLogo.scale-100.png" />
     <Content Include="Assets\SSSLogoSmall.scale-100.png" />
+    <Content Include="Assets\SSSLogoSmall.targetsize-48.png" />
     <Content Include="Assets\SSSSplashScreen.scale-100.png" />
     <Content Include="Assets\StoreLogo.scale-100.png" />
   </ItemGroup>
