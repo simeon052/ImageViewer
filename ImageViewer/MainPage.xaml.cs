@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Windows.Foundation;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
@@ -26,8 +27,24 @@ namespace ImageViewer
             this.PageSlider.Maximum = 1;
             this.PageSlider.Minimum = 1;
             var files = ImageFiles.GetInstance();
-//var task = files.RestoreAsync<ImageFiles>();
-//            task.Wait();
+            CoreWindow.GetForCurrentThread().KeyUp += Window_KeyUp;
+        }
+
+        private async void Window_KeyUp(CoreWindow sender, KeyEventArgs args)
+        {
+            Debug.WriteLine(args.VirtualKey.ToString());
+            switch (args.VirtualKey)
+            {
+                case Windows.System.VirtualKey.Right:
+                case Windows.System.VirtualKey.Space:
+                    await this.show_next_image();
+                    break;
+                case Windows.System.VirtualKey.Left:
+                    await this.show_previous_image();
+                    break;
+                default:
+                    break;
+            }
         }
 
         DispatcherTimer timer = null;
@@ -181,6 +198,5 @@ namespace ImageViewer
             timer.Stop();
             timer.Start();
         }
-
     }
 }
