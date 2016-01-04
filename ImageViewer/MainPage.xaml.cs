@@ -6,6 +6,7 @@ using Windows.Foundation;
 using Windows.Storage.Pickers;
 using Windows.Storage.Streams;
 using Windows.UI.Core;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media.Imaging;
@@ -20,7 +21,7 @@ namespace ImageViewer
     public sealed partial class MainPage : Page
     {
         const int InitialIntervalTime = 5;
-        ImageFiles files = null;
+        ImageFiles imageFiles = null;
         DispatcherTimer timer = null;
 
         public MainPage()
@@ -28,7 +29,7 @@ namespace ImageViewer
             this.InitializeComponent();
             this.PageSlider.Maximum = 1;
             this.PageSlider.Minimum = 1;
-            files = ImageFiles.GetInstance();
+            imageFiles = ImageFiles.GetInstance();
             CoreWindow.GetForCurrentThread().KeyUp += Window_KeyUp;
         }
 
@@ -45,11 +46,19 @@ namespace ImageViewer
                     await this.show_previous_image();
                     break;
                 case Windows.System.VirtualKey.R:
-                    await files.RestoreAsync();
-                    await this.show_specified_image(0);
+                    {
+                        await imageFiles.RestoreAsync();
+                        var dialog = new MessageDialog("Image list is restored.");
+                        await dialog.ShowAsync();
+                        await this.show_specified_image(0);
+                    }
                     break;
                 case Windows.System.VirtualKey.S:
-                    await files.SaveAsync();
+                    {
+                        await imageFiles.SaveAsync();
+                        var dialog = new MessageDialog("Image list is saved.");
+                        await dialog.ShowAsync();
+                    }
                     break;
                 default:
                     break;
@@ -79,8 +88,10 @@ namespace ImageViewer
 
         async void timer_Tick(object sender, object e)
         {
-            await this.show_next_image();
-
+            if (this.imageFiles.count != 0)
+            {
+                await this.show_next_image();
+            }
         }
 
         private async void LoadButton_Click(object sender, RoutedEventArgs e)
@@ -89,12 +100,12 @@ namespace ImageViewer
             picker.FileTypeFilter.Add(".png");
             picker.FileTypeFilter.Add(".jpg");
             var list = await picker.PickMultipleFilesAsync();
-            files = ImageFiles.GetInstance();
-            files.SetStorage(list);
-            this.PageSlider.Maximum = files.count;
+            imageFiles.Clear();
+            imageFiles.SetStorage(list);
+            this.PageSlider.Maximum = imageFiles.count;
             this.PageSlider.Minimum = 1;
             await this.show_specified_image(0);
-            await files.SaveAsync();
+//            await imageFiles.SaveAsync();
         }
 
 
@@ -114,12 +125,11 @@ namespace ImageViewer
 
         }
 
-
         private async Task show_next_image()
         {
-            if (files != null)
+            if (imageFiles != null)
             {
-                var file = files.GetNext();
+                var file = imageFiles.GetNext();
                 using (IRandomAccessStream stream = await file.OpenReadAsync())
                 {
                     var bitmap = new BitmapImage();
@@ -132,9 +142,9 @@ namespace ImageViewer
 
         private async Task show_previous_image()
         {
-            if (files != null)
+            if (imageFiles != null)
             {
-                var file = files.GetPrevious();
+                var file = imageFiles.GetPrevious();
                 using (IRandomAccessStream stream = await file.OpenReadAsync())
                 {
                     var bitmap = new BitmapImage();
@@ -147,9 +157,9 @@ namespace ImageViewer
 
         private async Task show_specified_image(int page)
         {
-            if (files != null)
+            if (imageFiles != null)
             {
-                var file = files.GetSpecified(page);
+                var file = imageFiles.GetSpecified(page);
                 using (IRandomAccessStream stream = await file.OpenReadAsync())
                 {
                     var bitmap = new BitmapImage();

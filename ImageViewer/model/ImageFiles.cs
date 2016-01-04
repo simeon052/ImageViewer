@@ -16,8 +16,8 @@ namespace ImageViewer.model
         private static ImageFiles _instance = null;
 
         private ImageFiles() {
-            files = new List<StorageFile>();
-            filelist = new List<string>();
+            storageFileList = new List<StorageFile>();
+            storageFilePathList = new List<string>();
             index = 0;
         }
 
@@ -28,8 +28,8 @@ namespace ImageViewer.model
             return _instance;
         }
 
-        private List<StorageFile> files = null;
-        private List<string> filelist = null;
+        private List<StorageFile> storageFileList = null;
+        private List<String> storageFilePathList = null;
 
         private int index = 0;
         public void SetStorage(IReadOnlyList<StorageFile> l)
@@ -42,51 +42,51 @@ namespace ImageViewer.model
 
         public void Add(StorageFile f)
         {
-            files.Add(f);
-            filelist.Add(f.Path);
+            storageFileList.Add(f);
+            storageFilePathList.Add(f.Path);
         }
 
-        public int count { get { return files.Count; } }
+        public int count { get { return storageFileList.Count; } }
 
         public StorageFile GetNext()
         {
-            if (index >= files.Count)
+            if (index >= storageFileList.Count)
             {
                 index = 0;
             }
             Debug.WriteLine(" Next : " + index.ToString());
-            return files[index++];
+            return storageFileList[index++];
         }
         public StorageFile GetPrevious()
         {
             Debug.WriteLine(" Previous : " + (index - 1).ToString());
             if (index <= 0)
             {
-                return files[0];
+                return storageFileList[0];
             }
             else
             {
-                return files[--index];
+                return storageFileList[--index];
             }
         }
 
         public StorageFile GetSpecified(int page)
         {
-            if ((0 < page) && (page < files.Count))
+            if ((0 < page) && (page < storageFileList.Count))
             {
                 index = page;
             }
             Debug.WriteLine(" Specified " + index.ToString());
-            return files[index];
+            return storageFileList[index];
         }
 
         public void Clear()
         {
-            this.filelist.Clear();
-            this.files.Clear();
+            this.storageFilePathList.Clear();
+            this.storageFileList.Clear();
         }
 
-        private const string filename = "test.dat";
+        private const string filename = "filelist.dat";
 
         async public Task SaveAsync()
         {
@@ -94,9 +94,9 @@ namespace ImageViewer.model
             using (IRandomAccessStream sessionRandomAccess = await sessionFile.OpenAsync(FileAccessMode.ReadWrite))
             using (IOutputStream sessionOutputStream = sessionRandomAccess.GetOutputStreamAt(0))
             {
-                //Using DataContractSerializer , look at the cat-class
+                //Using DataContractSerializer
                 var sessionSerializer = new DataContractSerializer(typeof(List<String>));
-                sessionSerializer.WriteObject(sessionOutputStream.AsStreamForWrite(), this.filelist);
+                sessionSerializer.WriteObject(sessionOutputStream.AsStreamForWrite(), this.storageFilePathList);
 
                 await sessionOutputStream.FlushAsync();
             }
