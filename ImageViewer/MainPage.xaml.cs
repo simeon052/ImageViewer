@@ -20,13 +20,15 @@ namespace ImageViewer
     public sealed partial class MainPage : Page
     {
         const int InitialIntervalTime = 5;
+        ImageFiles files = null;
+        DispatcherTimer timer = null;
 
         public MainPage()
         {
             this.InitializeComponent();
             this.PageSlider.Maximum = 1;
             this.PageSlider.Minimum = 1;
-            var files = ImageFiles.GetInstance();
+            files = ImageFiles.GetInstance();
             CoreWindow.GetForCurrentThread().KeyUp += Window_KeyUp;
         }
 
@@ -42,13 +44,18 @@ namespace ImageViewer
                 case Windows.System.VirtualKey.Left:
                     await this.show_previous_image();
                     break;
+                case Windows.System.VirtualKey.R:
+                    await files.RestoreAsync();
+                    await this.show_specified_image(0);
+                    break;
+                case Windows.System.VirtualKey.S:
+                    await files.SaveAsync();
+                    break;
                 default:
                     break;
             }
         }
 
-        DispatcherTimer timer = null;
-        ImageFiles files = null;
 
         protected override void OnNavigatedTo(NavigationEventArgs e)
         {
@@ -60,7 +67,6 @@ namespace ImageViewer
             timer.Interval = TimeSpan.FromSeconds(InitialIntervalTime);
             timer.Tick += timer_Tick;
             timer.Start();
-
 
             base.OnNavigatedTo(e);
         }
@@ -88,6 +94,7 @@ namespace ImageViewer
             this.PageSlider.Maximum = files.count;
             this.PageSlider.Minimum = 1;
             await this.show_specified_image(0);
+            await files.SaveAsync();
         }
 
 

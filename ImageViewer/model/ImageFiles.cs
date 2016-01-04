@@ -11,13 +11,15 @@ using Windows.Storage.Streams;
 
 namespace ImageViewer.model
 {
-    [KnownType(typeof(StorageFile))]
-    [CollectionDataContract]
     public class ImageFiles
     {
         private static ImageFiles _instance = null;
 
-        private ImageFiles() { }
+        private ImageFiles() {
+            files = new List<StorageFile>();
+            filelist = new List<string>();
+            index = 0;
+        }
 
         public static ImageFiles GetInstance()
         {
@@ -26,15 +28,12 @@ namespace ImageViewer.model
             return _instance;
         }
 
-        [DataMember]
         private List<StorageFile> files = null;
+        private List<string> filelist = null;
 
         private int index = 0;
         public void SetStorage(IReadOnlyList<StorageFile> l)
         {
-            files = new List<StorageFile>();
-            index = 0;
-
             foreach (var f in l)
             {
                 this.Add(f);
@@ -44,6 +43,7 @@ namespace ImageViewer.model
         public void Add(StorageFile f)
         {
             files.Add(f);
+            filelist.Add(f.Path);
         }
 
         public int count { get { return files.Count; } }
@@ -80,44 +80,49 @@ namespace ImageViewer.model
             return files[index];
         }
 
-        private const string filename = "test.dat";
-
-        async public Task SaveAsync<T>()
+        public void Clear()
         {
-                StorageFile sessionFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
-                IRandomAccessStream sessionRandomAccess = await sessionFile.OpenAsync(FileAccessMode.ReadWrite);
-                IOutputStream sessionOutputStream = sessionRandomAccess.GetOutputStreamAt(0);
-
-                //Using DataContractSerializer , look at the cat-class
-                var sessionSerializer = new DataContractSerializer(typeof(List<object>), new Type[] { typeof(T) });
-                sessionSerializer.WriteObject(sessionOutputStream.AsStreamForWrite(), this);
-
-                //Using XmlSerializer , look at the Dog-class
-                //var serializer = new XmlSerializer(typeof (List<object>), new Type[] {typeof (T)});
-                //serializer.Serialize(sessionOutputStream.AsStreamForWrite(), this);
-                //sessionRandomAccess.Dispose();
-                await sessionOutputStream.FlushAsync();
-                sessionOutputStream.Dispose();
+            this.filelist.Clear();
+            this.files.Clear();
         }
 
-        async public Task RestoreAsync<T>()
+        private const string filename = "test.dat";
+
+        async public Task SaveAsync()
+        {
+            StorageFile sessionFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
+            using (IRandomAccessStream sessionRandomAccess = await sessionFile.OpenAsync(FileAccessMode.ReadWrite))
+            using (IOutputStream sessionOutputStream = sessionRandomAccess.GetOutputStreamAt(0))
+            {
+                //Using DataContractSerializer , look at the cat-class
+                var sessionSerializer = new DataContractSerializer(typeof(List<String>));
+                sessionSerializer.WriteObject(sessionOutputStream.AsStreamForWrite(), this.filelist);
+
+                await sessionOutputStream.FlushAsync();
+            }
+        }
+
+        async public Task RestoreAsync()
         {
             StorageFile sessionFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(filename, CreationCollisionOption.OpenIfExists);
             if (sessionFile == null)
             {
                 return;
             }
-            IInputStream sessionInputStream = await sessionFile.OpenReadAsync();
+            this.Clear();
+            List<String> fileList = null;
+            using (IInputStream sessionInputStream = await sessionFile.OpenReadAsync())
+            {
+                //Using DataContractSerializer
+                var sessionSerializer = new DataContractSerializer(typeof(List<String>));
+                fileList = (List<String>)sessionSerializer.ReadObject(sessionInputStream.AsStreamForRead());
+            }
 
-            //Using DataContractSerializer , look at the cat-class
-            // var sessionSerializer = new DataContractSerializer(typeof(List<object>), new Type[] { typeof(T) });
-            //_data = (List<object>)sessionSerializer.ReadObject(sessionInputStream.AsStreamForRead());
-
-            //Using XmlSerializer , look at the Dog-class
-            var serializer = new XmlSerializer(typeof(List<object>), new Type[] { typeof(T) });
-            files.Clear();
-            files = (List<StorageFile>) serializer.Deserialize(sessionInputStream.AsStreamForRead());
-            sessionInputStream.Dispose();
+            foreach (var f in fileList)
+            {
+                StorageFile file = await StorageFile.GetFileFromPathAsync(f);
+                this.Add(file);
+            }
         }
 
     }
