@@ -63,6 +63,9 @@ namespace ImageViewer
                 default:
                     break;
             }
+            // Restert timer after user operation
+            timer.Stop();
+            timer.Start();
         }
 
 
@@ -136,6 +139,7 @@ namespace ImageViewer
                     bitmap.SetSource(stream);
                     this.image.Source = bitmap;
                 }
+                pageDisplay.Text = $"{imageFiles.current}/{imageFiles.count}";
             }
 
         }
@@ -151,6 +155,7 @@ namespace ImageViewer
                     bitmap.SetSource(stream);
                     this.image.Source = bitmap;
                 }
+                pageDisplay.Text = $"{imageFiles.current}/{imageFiles.count}";
             }
 
         }
@@ -166,6 +171,7 @@ namespace ImageViewer
                     bitmap.SetSource(stream);
                     this.image.Source = bitmap;
                 }
+                pageDisplay.Text = $"{imageFiles.current}/{imageFiles.count}";
             }
         }
 

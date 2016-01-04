@@ -40,6 +40,7 @@ namespace ImageViewer.model
             }
         }
 
+
         public void Add(StorageFile f)
         {
             storageFileList.Add(f);
@@ -47,6 +48,7 @@ namespace ImageViewer.model
         }
 
         public int count { get { return storageFileList.Count; } }
+        public int current { get { return index; } }
 
         public StorageFile GetNext()
         {
