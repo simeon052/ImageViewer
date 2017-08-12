@@ -108,7 +108,6 @@ namespace ImageViewer
             this.PageSlider.Maximum = imageFiles.count;
             this.PageSlider.Minimum = 1;
             await this.show_specified_image(0);
-//            await imageFiles.SaveAsync();
         }
 
 
@@ -140,6 +139,7 @@ namespace ImageViewer
                     this.image.Source = bitmap;
                 }
                 pageDisplay.Text = $"{imageFiles.current}/{imageFiles.count}";
+
             }
 
         }
@@ -156,6 +156,7 @@ namespace ImageViewer
                     this.image.Source = bitmap;
                 }
                 pageDisplay.Text = $"{imageFiles.current}/{imageFiles.count}";
+
             }
 
         }
@@ -172,6 +173,7 @@ namespace ImageViewer
                     this.image.Source = bitmap;
                 }
                 pageDisplay.Text = $"{imageFiles.current}/{imageFiles.count}";
+
             }
         }
 
@@ -179,7 +181,7 @@ namespace ImageViewer
         {
             int currentPage = 0;
             int.TryParse(PageNumber.Text, out currentPage);
-            Debug.WriteLine("Page jump flyout is closed. " + currentPage.ToString());
+            Debug.WriteLine($"Page jump flyout is closed. {currentPage.ToString()} ");
             await show_specified_image(currentPage);
 
         }
@@ -221,5 +223,10 @@ namespace ImageViewer
             timer.Stop();
             timer.Start();
         }
+
+        private void image_ImageOpened(object sender, RoutedEventArgs e)
+        {
+        }
+
     }
 }

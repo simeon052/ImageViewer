@@ -38,6 +38,6 @@
 
     <Grid Background="Transparent" ManipulationMode="TranslateX" ManipulationStarted="Grid_ManipulationStarted" ManipulationCompleted="Grid_ManipulationCompleted">
         <TextBlock Text="0/0" Name="pageDisplay" HorizontalAlignment="Right"></TextBlock>        
-        <Image x:Name="image"/>
+        <Image x:Name="image" ImageOpened="image_ImageOpened"/>
     </Grid>
 </Page>
