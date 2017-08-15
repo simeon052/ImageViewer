@@ -79,7 +79,14 @@ namespace ImageViewer.model
                 index = page;
             }
             Debug.WriteLine(" Specified " + index.ToString());
-            return storageFileList[index];
+            if (storageFileList.Count == 0)
+            {
+                return null;
+            }
+            else
+            {
+                return storageFileList[index];
+            }
         }
 
         public void Clear()

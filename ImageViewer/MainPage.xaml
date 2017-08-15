@@ -7,9 +7,9 @@
       mc:Ignorable="d">
     <Page.BottomAppBar>
         <CommandBar Background="#00a2e8">
-            <CommandBar.SecondaryCommands>
-                <AppBarButton Click="LoadButton_Click" Icon="SlideShow" />
-                <AppBarButton Icon="Setting">
+            <CommandBar.SecondaryCommands>                
+                <AppBarButton Click="LoadButton_Click" Icon="SlideShow" Label="Select files"/>
+                <AppBarButton Icon="Setting" Label="Setting interval">
                     <AppBarButton.Flyout>
                         <MenuFlyout>
                             <MenuFlyoutItem Click="MenuFlyoutItem_Click_1" Text="1 second" />
@@ -19,7 +19,7 @@
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
-                <AppBarButton Icon="Directions">
+                <AppBarButton Icon="Directions" Label="Moves to...">
                     <AppBarButton.Flyout>
                         <Flyout x:Name="PageJumpFlyout" Closed="Flyout_Closed">
                             <StackPanel Width="210">
@@ -31,6 +31,7 @@
                         </Flyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
+                <AppBarButton Icon="Link" x:Uid="PrivacyPolicy" Label="Privacy policy" Click="AppBarButton_Click"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>

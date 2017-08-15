@@ -165,15 +165,17 @@ namespace ImageViewer
         {
             if (imageFiles != null)
             {
-                var file = imageFiles.GetSpecified(page);
-                using (IRandomAccessStream stream = await file.OpenReadAsync())
+                var file = imageFiles.GetSpecified(page-1); // 0 origin
+                if (file != null)
                 {
-                    var bitmap = new BitmapImage();
-                    bitmap.SetSource(stream);
-                    this.image.Source = bitmap;
+                    using (IRandomAccessStream stream = await file.OpenReadAsync())
+                    {
+                        var bitmap = new BitmapImage();
+                        bitmap.SetSource(stream);
+                        this.image.Source = bitmap;
+                    }
                 }
                 pageDisplay.Text = $"{imageFiles.current}/{imageFiles.count}";
-
             }
         }
 
@@ -228,5 +230,10 @@ namespace ImageViewer
         {
         }
 
+        private async void AppBarButton_Click(object sender, RoutedEventArgs e)
+        {
+                await Windows.System.Launcher.LaunchUriAsync(new Uri("http://www.google.com/"));
+
+        }
     }
 }

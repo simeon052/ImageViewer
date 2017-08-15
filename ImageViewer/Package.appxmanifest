@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="933f0fc4-a5c8-4a19-aa64-3f6a4b87d308" Publisher="CN=Simeon" Version="1.0.0.0" />
+  <Identity Name="31156Simeon052.SimpleSlideShow" Publisher="CN=82D27054-24F7-47CD-ACC6-63614C30CAA4" Version="1.1.0.10" />
   <Properties>
-    <DisplayName>SimpleSlideShow</DisplayName>
-    <PublisherDisplayName>Simeon</PublisherDisplayName>
+    <DisplayName>Simple Slide Show</DisplayName>
+    <PublisherDisplayName>Simeon052</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
   <Prerequisites>
@@ -14,12 +14,9 @@
     <Resource Language="x-generate" />
   </Resources>
   <Applications>
-    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="ImageViewer.App">
+    <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="SimpleSlideShow.App">
       <m2:VisualElements DisplayName="Simple Slide Show" Square150x150Logo="Assets\SSSLogo.png" Square30x30Logo="Assets\SSSLogoSmall.png" Description="Simple Slide Show Application" ForegroundText="light" BackgroundColor="#464646">
         <m2:DefaultTile Square310x310Logo="Assets\Square310x310Logo.png" Wide310x150Logo="Assets\Wide310x150Logo.png" Square70x70Logo="Assets\Square70x70Logo.png" ShortName="SimpleSlideShow">
-          <m2:ShowNameOnTiles>
-            <m2:ShowOn Tile="square150x150Logo" />
-          </m2:ShowNameOnTiles>
         </m2:DefaultTile>
         <m2:SplashScreen Image="Assets\SSSSplashScreen.png" />
         <m2:InitialRotationPreference>
