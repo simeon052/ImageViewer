@@ -232,7 +232,7 @@ namespace ImageViewer
 
         private async void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
-                await Windows.System.Launcher.LaunchUriAsync(new Uri("http://www.google.com/"));
+                await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/simeon052/ImageViewer/wiki/Privacy-policy"));
 
         }
     }
