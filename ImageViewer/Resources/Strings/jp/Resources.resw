@@ -120,11 +120,17 @@
   <data name="AppBtnFIleSelect.Label" xml:space="preserve">
     <value>ファイル選択</value>
   </data>
+  <data name="AppBtnLoad.Label" xml:space="preserve">
+    <value>ファイルリスト　　読込</value>
+  </data>
   <data name="AppBtnMovesTo.Label" xml:space="preserve">
     <value>指定のファイルに移動</value>
   </data>
   <data name="AppBtnPrivacyPolicy.Label" xml:space="preserve">
     <value>プライバシー　　　ポリシー</value>
+  </data>
+  <data name="AppBtnSave.Label" xml:space="preserve">
+    <value>ファイルリスト　　保存</value>
   </data>
   <data name="AppBtnSetInterval.Label" xml:space="preserve">
     <value>更新間隔設定</value>

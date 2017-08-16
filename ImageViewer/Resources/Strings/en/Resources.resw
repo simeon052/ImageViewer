@@ -120,11 +120,17 @@
   <data name="AppBtnFIleSelect.Label" xml:space="preserve">
     <value>Select files</value>
   </data>
+  <data name="AppBtnLoad.Label" xml:space="preserve">
+    <value>Load filelist</value>
+  </data>
   <data name="AppBtnMovesTo.Label" xml:space="preserve">
     <value>Moves to</value>
   </data>
   <data name="AppBtnPrivacyPolicy.Label" xml:space="preserve">
     <value>Privacy policy</value>
+  </data>
+  <data name="AppBtnSave.Label" xml:space="preserve">
+    <value>Save filelist</value>
   </data>
   <data name="AppBtnSetInterval.Label" xml:space="preserve">
     <value>Set interval</value>

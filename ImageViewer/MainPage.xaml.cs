@@ -256,9 +256,15 @@ namespace ImageViewer
 
         }
 
-        private void Page_Loaded(object sender, RoutedEventArgs e)
+        private async void SaveListBtn_Click(object sender, RoutedEventArgs e)
         {
+            await imageFiles.SaveAsync();
+        }
 
+        private async void LoadListBtn_Click(object sender, RoutedEventArgs e)
+        {
+            await imageFiles.RestoreAsync();
+            await this.show_specified_image(0);
         }
     }
 }
