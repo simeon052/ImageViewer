@@ -159,7 +159,6 @@ namespace ImageViewer
                 pageDisplay.Text = $"{imageFiles.current}/{imageFiles.count}";
 
             }
-            this.AppBarHandler(false);
         }
 
         private async Task show_previous_image()
@@ -176,7 +175,6 @@ namespace ImageViewer
                 pageDisplay.Text = $"{imageFiles.current}/{imageFiles.count}";
 
             }
-            this.AppBarHandler(false);
         }
 
         private async Task show_specified_image(int page)
