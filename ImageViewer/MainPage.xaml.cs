@@ -235,5 +235,10 @@ namespace ImageViewer
                 await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/simeon052/ImageViewer/wiki/Privacy-policy"));
 
         }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
