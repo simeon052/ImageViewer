@@ -146,6 +146,8 @@
     <Content Include="Assets\Wide310x150Logo.scale-80.png" />
     <None Include="ImageViewer_TemporaryKey.pfx" />
     <None Include="Package.StoreAssociation.xml" />
+    <PRIResource Include="Resources\Strings\jp\Resources.resw" />
+    <PRIResource Include="Resources\Strings\en\Resources.resw" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">

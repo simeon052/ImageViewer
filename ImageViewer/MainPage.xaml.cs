@@ -20,7 +20,7 @@ namespace ImageViewer
     /// </summary>
     public sealed partial class MainPage : Page
     {
-        const int InitialIntervalTime = 5;
+        const int InitialIntervalTime = 1;
         ImageFiles imageFiles = null;
         DispatcherTimer timer = null;
 
@@ -95,6 +95,24 @@ namespace ImageViewer
             {
                 await this.show_next_image();
             }
+            else
+            {
+                this.AppBarHandler();
+                timer.Interval = TimeSpan.FromSeconds(5);
+            }
+        }
+
+        private void AppBarHandler(bool isOpen = true)
+        {
+            // 画像ファイルが何も指定されていなければ、アプリバーをひらく
+            var frame = Window.Current.Content as Frame;
+            var page = frame.Content as Page;
+            var appBar = page.BottomAppBar;
+            // アプリバーを開く
+            if (appBar != null)
+            {
+                appBar.IsOpen = isOpen;
+            }
         }
 
         private async void LoadButton_Click(object sender, RoutedEventArgs e)
@@ -141,7 +159,7 @@ namespace ImageViewer
                 pageDisplay.Text = $"{imageFiles.current}/{imageFiles.count}";
 
             }
-
+            this.AppBarHandler(false);
         }
 
         private async Task show_previous_image()
@@ -158,7 +176,7 @@ namespace ImageViewer
                 pageDisplay.Text = $"{imageFiles.current}/{imageFiles.count}";
 
             }
-
+            this.AppBarHandler(false);
         }
 
         private async Task show_specified_image(int page)
@@ -177,6 +195,7 @@ namespace ImageViewer
                 }
                 pageDisplay.Text = $"{imageFiles.current}/{imageFiles.count}";
             }
+                        this.AppBarHandler(false);
         }
 
         private async void Flyout_Closed(object sender, object e)
@@ -185,6 +204,7 @@ namespace ImageViewer
             int.TryParse(PageNumber.Text, out currentPage);
             Debug.WriteLine($"Page jump flyout is closed. {currentPage.ToString()} ");
             await show_specified_image(currentPage);
+            this.AppBarHandler(false);
 
         }
 
@@ -233,6 +253,11 @@ namespace ImageViewer
         private async void AppBarButton_Click(object sender, RoutedEventArgs e)
         {
                 await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/simeon052/ImageViewer/wiki/Privacy-policy"));
+
+        }
+
+        private void Page_Loaded(object sender, RoutedEventArgs e)
+        {
 
         }
     }

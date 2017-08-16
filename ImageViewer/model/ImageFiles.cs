@@ -95,9 +95,9 @@ namespace ImageViewer.model
             this.storageFileList.Clear();
         }
 
-        private const string filename = "filelist.dat";
+        private const string defaultFileName = "filelist.dat";
 
-        async public Task SaveAsync()
+        async public Task SaveAsync(string filename = defaultFileName)
         {
             StorageFile sessionFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(filename, CreationCollisionOption.ReplaceExisting);
             using (IRandomAccessStream sessionRandomAccess = await sessionFile.OpenAsync(FileAccessMode.ReadWrite))
@@ -111,7 +111,7 @@ namespace ImageViewer.model
             }
         }
 
-        async public Task RestoreAsync()
+        async public Task RestoreAsync(string filename = defaultFileName)
         {
             StorageFile sessionFile = await ApplicationData.Current.LocalFolder.CreateFileAsync(filename, CreationCollisionOption.OpenIfExists);
             if (sessionFile == null)
