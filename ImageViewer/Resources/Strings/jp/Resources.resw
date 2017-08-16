@@ -127,6 +127,21 @@
     <value>プライバシー　　　ポリシー</value>
   </data>
   <data name="AppBtnSetInterval.Label" xml:space="preserve">
-    <value>更新時間設定</value>
+    <value>更新間隔設定</value>
+  </data>
+  <data name="FlyoutMenu1.Text" xml:space="preserve">
+    <value>1 秒</value>
+  </data>
+  <data name="FlyoutMenu3.Text" xml:space="preserve">
+    <value>3 秒</value>
+  </data>
+  <data name="FlyoutMenu5.Text" xml:space="preserve">
+    <value>5 秒</value>
+  </data>
+  <data name="FlyoutMenu60.Text" xml:space="preserve">
+    <value>60 秒</value>
+  </data>
+  <data name="FlyoutTitleMovesTo.Text" xml:space="preserve">
+    <value>指定のファイルを表示</value>
   </data>
 </root>

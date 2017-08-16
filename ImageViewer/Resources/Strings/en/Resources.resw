@@ -129,4 +129,19 @@
   <data name="AppBtnSetInterval.Label" xml:space="preserve">
     <value>Set interval</value>
   </data>
+  <data name="FlyoutMenu1.Text" xml:space="preserve">
+    <value>1 second</value>
+  </data>
+  <data name="FlyoutMenu3.Text" xml:space="preserve">
+    <value>3 seconds</value>
+  </data>
+  <data name="FlyoutMenu5.Text" xml:space="preserve">
+    <value>5 seconds</value>
+  </data>
+  <data name="FlyoutMenu60.Text" xml:space="preserve">
+    <value>60 seconds</value>
+  </data>
+  <data name="FlyoutTitleMovesTo.Text" xml:space="preserve">
+    <value>Moves to</value>
+  </data>
 </root>

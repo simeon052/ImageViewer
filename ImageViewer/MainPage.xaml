@@ -4,7 +4,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:ImageViewer"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      mc:Ignorable="d">
+      mc:Ignorable="d" Loaded="Page_Loaded">
     <Page.BottomAppBar>
         <CommandBar Background="#00a2e8">
             <CommandBar.SecondaryCommands>                
@@ -12,10 +12,10 @@
                 <AppBarButton Icon="Setting" x:Uid="AppBtnSetInterval">
                     <AppBarButton.Flyout>
                         <MenuFlyout>
-                            <MenuFlyoutItem Click="MenuFlyoutItem_Click_1" Text="1 second" />
-                            <MenuFlyoutItem Click="MenuFlyoutItem_Click_3" Text="3 seconds" />
-                            <MenuFlyoutItem Click="MenuFlyoutItem_Click_5" Text="5 seconds" />
-                            <MenuFlyoutItem Click="MenuFlyoutItem_Click_60" Text="60 seconds" />
+                            <MenuFlyoutItem Click="MenuFlyoutItem_Click_1" x:Uid="FlyOutMenu1"/>
+                            <MenuFlyoutItem Click="MenuFlyoutItem_Click_3" x:Uid="FlyOutMenu3"/>
+                            <MenuFlyoutItem Click="MenuFlyoutItem_Click_5" x:Uid="FlyOutMenu5" />
+                            <MenuFlyoutItem Click="MenuFlyoutItem_Click_60" x:Uid="FlyOutMenu60"/>
                         </MenuFlyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
@@ -23,7 +23,7 @@
                     <AppBarButton.Flyout>
                         <Flyout x:Name="PageJumpFlyout" Closed="Flyout_Closed">
                             <StackPanel Width="210">
-                                <TextBlock Text="Jump to ..."/>
+                                <TextBlock x:Uid="FlyoutTitleMovesTo"/>
                                 <TextBox Name="PageNumber"  Text="1" HorizontalAlignment="Center" ></TextBox>
                                 <Slider Name="PageSlider" Value="{Binding ElementName=PageNumber, Path=Text, Mode=TwoWay}"></Slider>
                                 <Button x:Name="JumpPageFlyoutOKButton" Content="OK" HorizontalAlignment="Stretch" Margin="70,0" RenderTransformOrigin="3.593,0.642" Click="JumpPageFlyoutOKButton_Click"/>
