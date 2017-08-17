@@ -31,8 +31,8 @@
                         </Flyout>
                     </AppBarButton.Flyout>
                 </AppBarButton>
-                <AppBarButton Icon="Save" x:Name="SaveListBtn" Click="SaveListBtn_Click" x:Uid="AppBtnSave" />
-                <AppBarButton Icon="Read" x:Name="LoadListBtn" Click="LoadListBtn_Click" x:Uid="AppBtnLoad"/>
+                <AppBarButton Icon="SaveLocal" x:Name="SaveListBtn" Click="SaveListBtn_Click" x:Uid="AppBtnSave" />
+                <AppBarButton Icon="OpenLocal" x:Name="LoadListBtn" Click="LoadListBtn_Click" x:Uid="AppBtnLoad"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
