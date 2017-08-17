@@ -126,9 +126,6 @@
   <data name="AppBtnMovesTo.Label" xml:space="preserve">
     <value>指定のファイルに移動</value>
   </data>
-  <data name="AppBtnPrivacyPolicy.Label" xml:space="preserve">
-    <value>プライバシー　　　ポリシー</value>
-  </data>
   <data name="AppBtnSave.Label" xml:space="preserve">
     <value>ファイルリスト　　保存</value>
   </data>
@@ -149,5 +146,8 @@
   </data>
   <data name="FlyoutTitleMovesTo.Text" xml:space="preserve">
     <value>指定のファイルを表示</value>
+  </data>
+  <data name="PrivacyPolicyStr" xml:space="preserve">
+    <value>プライバシー ポリシー</value>
   </data>
 </root>

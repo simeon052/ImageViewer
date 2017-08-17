@@ -126,9 +126,6 @@
   <data name="AppBtnMovesTo.Label" xml:space="preserve">
     <value>Moves to</value>
   </data>
-  <data name="AppBtnPrivacyPolicy.Label" xml:space="preserve">
-    <value>Privacy policy</value>
-  </data>
   <data name="AppBtnSave.Label" xml:space="preserve">
     <value>Save filelist</value>
   </data>
@@ -149,5 +146,8 @@
   </data>
   <data name="FlyoutTitleMovesTo.Text" xml:space="preserve">
     <value>Moves to</value>
+  </data>
+  <data name="PrivacyPolicyStr" xml:space="preserve">
+    <value>Privacy policy</value>
   </data>
 </root>

@@ -33,11 +33,9 @@
                 </AppBarButton>
                 <AppBarButton Icon="Save" x:Name="SaveListBtn" Click="SaveListBtn_Click" x:Uid="AppBtnSave" />
                 <AppBarButton Icon="Read" x:Name="LoadListBtn" Click="LoadListBtn_Click" x:Uid="AppBtnLoad"/>
-                <AppBarButton Icon="Link" x:Uid="AppBtnPrivacyPolicy" Click="AppBarButton_Click"/>
             </CommandBar.SecondaryCommands>
         </CommandBar>
     </Page.BottomAppBar>
-
 
     <Grid Background="Transparent" ManipulationMode="TranslateX" ManipulationStarted="Grid_ManipulationStarted" ManipulationCompleted="Grid_ManipulationCompleted">
         <TextBlock Text="0/0" Name="pageDisplay" HorizontalAlignment="Right"></TextBlock>        

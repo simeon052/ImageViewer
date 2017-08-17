@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Package xmlns="http://schemas.microsoft.com/appx/2010/manifest" xmlns:m2="http://schemas.microsoft.com/appx/2013/manifest">
-  <Identity Name="31156Simeon052.SimpleSlideShow" Publisher="CN=82D27054-24F7-47CD-ACC6-63614C30CAA4" Version="1.1.0.11" />
+  <Identity Name="31156Simeon052.SimpleSlideShow" Publisher="CN=82D27054-24F7-47CD-ACC6-63614C30CAA4" Version="1.1.0.12" />
   <Properties>
     <DisplayName>Simple Slide Show</DisplayName>
     <PublisherDisplayName>Simeon052</PublisherDisplayName>
