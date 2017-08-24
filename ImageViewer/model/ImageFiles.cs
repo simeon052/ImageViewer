@@ -93,6 +93,7 @@ namespace ImageViewer.model
         {
             this.storageFilePathList.Clear();
             this.storageFileList.Clear();
+            index = 0;
         }
 
         private const string defaultFileName = "filelist.dat";

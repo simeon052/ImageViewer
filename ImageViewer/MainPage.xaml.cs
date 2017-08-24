@@ -181,7 +181,7 @@ namespace ImageViewer
         {
             if (imageFiles != null)
             {
-                var file = imageFiles.GetSpecified(page-1); // 0 origin
+                var file = imageFiles.GetSpecified(page == 0 ? 0 : page-1); // 0 origin
                 if (file != null)
                 {
                     using (IRandomAccessStream stream = await file.OpenReadAsync())
