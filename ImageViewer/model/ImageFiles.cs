@@ -93,6 +93,7 @@ namespace ImageViewer.model
         {
             this.storageFilePathList.Clear();
             this.storageFileList.Clear();
+            index = 0;
         }
 
         private const string defaultFileName = "filelist.dat";
@@ -122,15 +123,20 @@ namespace ImageViewer.model
             List<String> fileList = null;
             using (IInputStream sessionInputStream = await sessionFile.OpenReadAsync())
             {
-                //Using DataContractSerializer
-                var sessionSerializer = new DataContractSerializer(typeof(List<String>));
-                fileList = (List<String>)sessionSerializer.ReadObject(sessionInputStream.AsStreamForRead());
+                if (sessionInputStream.AsStreamForRead().Length != 0)
+                {
+                    //Using DataContractSerializer
+                    var sessionSerializer = new DataContractSerializer(typeof(List<String>));
+                    fileList = (List<String>)sessionSerializer.ReadObject(sessionInputStream.AsStreamForRead());
+                }
             }
-
-            foreach (var f in fileList)
+            if (fileList != null)
             {
-                StorageFile file = await StorageFile.GetFileFromPathAsync(f);
-                this.Add(file);
+                foreach (var f in fileList)
+                {
+                    StorageFile file = await StorageFile.GetFileFromPathAsync(f);
+                    this.Add(file);
+                }
             }
         }
 

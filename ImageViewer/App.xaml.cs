@@ -6,6 +6,9 @@ using System.Xml;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.Storage;
+using Windows.System;
+using Windows.UI.ApplicationSettings;
+using Windows.UI.Popups;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
@@ -29,6 +32,7 @@ namespace ImageViewer
             this.Suspending += OnSuspending;
         }
 
+        bool EventRegistered;
         /// <summary>
         /// アプリケーションがエンド ユーザーによって正常に起動されたときに呼び出されます。他のエントリ ポイントは、
         /// アプリケーションが特定のファイルを開くために起動されたときなどに使用されます。
@@ -76,8 +80,41 @@ namespace ImageViewer
             }
             // 現在のウィンドウがアクティブであることを確認します
             Window.Current.Activate();
+
+            if (!this.EventRegistered)
+            {
+                SettingsPane.GetForCurrentView().CommandsRequested += OnCommandsRequested;
+                this.EventRegistered = true;
+            }
         }
 
+        // http://gihyo.jp/dev/serial/01/win8gen-devel/0003
+        void OnCommandsRequested(SettingsPane settingsPane, SettingsPaneCommandsRequestedEventArgs eventArgs)
+        {
+            var loader = new Windows.ApplicationModel.Resources.ResourceLoader();
+            var str = loader.GetString("PrivacyPolicyStr");
+            var handler = new UICommandInvokedHandler(OnSettingsCommand);
+
+            var policyCommand = new SettingsCommand("policy", str, handler);
+            eventArgs.Request.ApplicationCommands.Add(policyCommand);
+        }
+
+        void OnSettingsCommand(IUICommand command)
+        {
+            var settingsCommand = (SettingsCommand)command;
+            switch (settingsCommand.Id.ToString())
+            {
+                case "policy":
+                    ShowPrivacyPolicy();
+                    break;
+            }
+        }
+
+        // プライバシーポリシーの表示
+        async void ShowPrivacyPolicy()
+        {
+            await Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/simeon052/ImageViewer/wiki/Privacy-policy"));
+        }
         /// <summary>
         /// 特定のページへの移動が失敗したときに呼び出されます
         /// </summary>
