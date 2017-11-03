@@ -52,6 +52,11 @@ namespace ImageViewer.model
 
         public StorageFile GetNext()
         {
+           if(storageFileList.Count == 0)
+            {
+                return null;
+            }
+
             if (index >= storageFileList.Count)
             {
                 index = 0;
@@ -61,6 +66,11 @@ namespace ImageViewer.model
         }
         public StorageFile GetPrevious()
         {
+            if(storageFileList.Count == 0)
+            {
+                return null;
+            }
+
             Debug.WriteLine(" Previous : " + (index - 1).ToString());
             if (index <= 0)
             {

@@ -150,14 +150,16 @@ namespace ImageViewer
             if (imageFiles != null)
             {
                 var file = imageFiles.GetNext();
-                using (IRandomAccessStream stream = await file.OpenReadAsync())
+                if (file != null)
                 {
-                    var bitmap = new BitmapImage();
-                    bitmap.SetSource(stream);
-                    this.image.Source = bitmap;
+                    using (IRandomAccessStream stream = await file.OpenReadAsync())
+                    {
+                        var bitmap = new BitmapImage();
+                        bitmap.SetSource(stream);
+                        this.image.Source = bitmap;
+                    }
+                    pageDisplay.Text = $"{imageFiles.current}/{imageFiles.count}";
                 }
-                pageDisplay.Text = $"{imageFiles.current}/{imageFiles.count}";
-
             }
         }
 
@@ -166,14 +168,16 @@ namespace ImageViewer
             if (imageFiles != null)
             {
                 var file = imageFiles.GetPrevious();
-                using (IRandomAccessStream stream = await file.OpenReadAsync())
+                if (file != null)
                 {
-                    var bitmap = new BitmapImage();
-                    bitmap.SetSource(stream);
-                    this.image.Source = bitmap;
+                    using (IRandomAccessStream stream = await file.OpenReadAsync())
+                    {
+                        var bitmap = new BitmapImage();
+                        bitmap.SetSource(stream);
+                        this.image.Source = bitmap;
+                    }
+                    pageDisplay.Text = $"{imageFiles.current}/{imageFiles.count}";
                 }
-                pageDisplay.Text = $"{imageFiles.current}/{imageFiles.count}";
-
             }
         }
 
@@ -181,7 +185,7 @@ namespace ImageViewer
         {
             if (imageFiles != null)
             {
-                var file = imageFiles.GetSpecified(page == 0 ? 0 : page-1); // 0 origin
+                var file = imageFiles.GetSpecified(page == 0 ? 0 : page - 1); // 0 origin
                 if (file != null)
                 {
                     using (IRandomAccessStream stream = await file.OpenReadAsync())
@@ -193,7 +197,7 @@ namespace ImageViewer
                 }
                 pageDisplay.Text = $"{imageFiles.current}/{imageFiles.count}";
             }
-                        this.AppBarHandler(false);
+            this.AppBarHandler(false);
         }
 
         private async void Flyout_Closed(object sender, object e)
